@@ -57,28 +57,11 @@
                 {% endif %}
 
                 <div class="col">
-                    <!-- 栏目 -->
-                    {% if article.column %}
-                        <button type="button"
-                                class="btn btn-sm mb-2
-                        {% if article.column.title == 'Django' %}
-                            btn-success
-                        {% elif article.column.title == 'java' %}
-                            btn-danger
-                        {% elif article.column.title == 'html' %}
-                            btn-warning
-                        {% endif %}
-                    "
-                        >
-                            {{ article.column }}
-                        </button>
-                    {% endif %}
                     <span>
                         {% for tag in article.tags.all %}
                             <a href="#" class="badge badge-secondary">{{ tag }}</a>
                         {% endfor %}
                     </span>
-
                     <!-- 标题 -->
                     <h4>
                         <b>
@@ -99,7 +82,6 @@
                     <p>
                         <!-- 附加信息 -->
                         <span style="color: green;">
-                            <i class="fas fa-comments" style="color: yellowgreen;"></i>
                             {{ article.total_views }} 浏览&nbsp;&nbsp;&nbsp;
                         </span>
                         <span style="color: blue;">

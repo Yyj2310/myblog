@@ -13,7 +13,6 @@ from django.db.models import Q
 
 from comment.models import Comment
 
-from .models import ArticleColumn
 
 from comment.forms import CommentForm
 
@@ -21,7 +20,6 @@ def article_list(request):
     # 从 url 中提取查询参数
     search = request.GET.get('search')
     order = request.GET.get('order')
-    column = request.GET.get('column')
     tag = request.GET.get('tag')
 
     # 初始化查询集
@@ -35,10 +33,6 @@ def article_list(request):
         )
     else:
         search = ''
-
-    # 栏目查询集
-    if column is not None and column.isdigit():
-        article_list = article_list.filter(column=column)
 
     # 标签查询集
     if tag and tag != 'None':
@@ -57,7 +51,6 @@ def article_list(request):
         'articles': articles,
         'order': order,
         'search': search,
-        'column': column,
         'tag': tag,
     }
 
@@ -106,10 +99,6 @@ def article_create(request):
             # 此时请重新创建用户，并传入此用户的id
             new_article.author = User.objects.get(id=4)
 
-            # 新增的代码
-            if request.POST['column'] != 'none':
-                new_article.column = ArticleColumn.objects.get(id=request.POST['column'])
-
             # 将新文章保存到数据库中
             new_article.save()
             # 新增代码，保存 tags 的多对多关系
@@ -127,8 +116,8 @@ def article_create(request):
         # 赋值上下文
         # 返回模板
         # 新增及修改的代码
-        columns = ArticleColumn.objects.all()
-        context = {'article_post_form': article_post_form, 'columns': columns}
+
+        context = {'article_post_form': article_post_form}
         return render(request, 'article/create.html', context)
 
 
@@ -171,11 +160,6 @@ def article_update(request, id):
             article.save()
             # 完成后返回到修改后的文章中。需传入文章的 id 值
 
-            # 新增的代码
-            if request.POST['column'] != 'none':
-                article.column = ArticleColumn.objects.get(id=request.POST['column'])
-            else:
-                article.column = None
 
             return redirect("article:article_detail", id=id)
         # 如果数据不合法，返回错误信息
@@ -190,10 +174,8 @@ def article_update(request, id):
         # 赋值上下文，将 article 文章对象也传递进去，以便提取旧的内容
         # 将响应返回到模板中
         # 新增及修改的代码
-        columns = ArticleColumn.objects.all()
         context = {
             'article': article,
             'article_post_form': article_post_form,
-            'columns': columns,
         }
         return render(request, 'article/update.html', context)

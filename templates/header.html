@@ -17,6 +17,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'article:article_list' %}">About</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'article:article_create' %}">Create</a>
+                </li>
 
                 <!-- Django的 if 模板语句 -->
                 {% if user.is_authenticated %}
