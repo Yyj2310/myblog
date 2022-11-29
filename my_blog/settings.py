@@ -152,13 +152,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static/'  # 通过url直接访问在项目中的静态文件
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static_')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static1')  # 部署静态文件时所有的静态文件的聚合
 
 # 重置密码的邮箱地址
 # SMTP服务器，改为你的邮箱的smtp!
